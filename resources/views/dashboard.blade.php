@@ -1,20 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    Bienvenido - {{ Auth::user()->first_name }}
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-</div>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-<div>
-    <form method="POST" action="{{ route('logout') }}" class="w-1/2">
-        @csrf
-        <div class="flex justify-center">
-            <button type="submit">LOGOUT</button>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div x-data="{ sidebarOpen: false }">
+        <div class="flex h-screen bg-gray-100">
+            <!--It is a background that is activated when the screen size is 768px and the sidebar is displayed-->
+            <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false"
+                class="fixed z-20 inset-0 bg-black opacity-60 transition-opacity lg:hidden"></div>
+
+            <!--Sidebar-->
+            <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
+                class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform border border-l shadow-sm
+                        bg-white overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
+
+                <!--User role-->
+                <a href="{{ route('dashboard') }}"
+                    class="flex items-center justify-center h-auto space-x-2 mx-5 border-b-2 flex-wrap">
+                    <x-icons.shield class="w-8 max-h-full h-14 text-gray-500" />
+                    <span class="text-gray-800 text-2xl font-bold uppercase tracking-wide text-center">
+                        {{ Auth::user()->role->name }}
+                    </span>
+                </a>
+
+                <!--Sidebar options-->
+                <nav class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
+                    <x-dropdown.simple.option class="w-full">
+                        <x-slot name="header">
+                            <x-icons.director />
+                            <span>{{ __('Director') }}</span>
+                        </x-slot>
+                        <x-slot name="content">
+                            <x-dropdown.simple.link>{{ __('List directors') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link>{{ __('Create a new director') }}</x-dropdown.simple.link>
+                        </x-slot>
+                    </x-dropdown.simple.option>
+
+                    <x-dropdown.simple.option class="w-full">
+                        <x-slot name="header">
+                            <x-icons.guard />
+                            <span>{{ __('Guards') }}</span>
+                        </x-slot>
+                        <x-slot name="content">
+                            <x-dropdown.simple.link>{{ __('List guards') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link>{{ __('Create a new guard') }}</x-dropdown.simple.link>
+                        </x-slot>
+                    </x-dropdown.simple.option>
+
+                    <x-dropdown.simple.option title="Hello world" class="w-full">
+                        <x-slot name="header">
+                            <x-icons.prisoner />
+                            <span>{{ __('Prisoners') }}</span>
+                        </x-slot>
+                        <x-slot name="content">
+                            <x-dropdown.simple.link>{{ __('List prisoner') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link>{{ __('Create a new prisoner') }}</x-dropdown.simple.link>
+                        </x-slot>
+                    </x-dropdown.simple.option>
+                </nav>
+            </div>
+
+            <!--Main view-->
+            <div class="flex-1 flex flex-col">
+                <!--Navbar-->
+                <header
+                    class="flex flex-shrink-0 h-14 justify-between lg:justify-end bg-white shadow-md
+                               px-5 md:px-8 z-0">
+
+                    <!--Menu option-->
+                    <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
+                        <x-icons.menu class="w-6 h-6" />
+                    </button>
+
+                    <div class="flex items-center space-x-4">
+                        <!--Notifications-->
+                        <x-dropdown.menu.option>
+                            <x-slot name="header">
+                                <x-icons.notification />
+                            </x-slot>
+                            <x-slot name="content">
+                                <x-dropdown.menu.link>
+                                    {{ __('Notifications') }}
+                                </x-dropdown.menu.link>
+                            </x-slot>
+                        </x-dropdown.menu.option>
+
+                        <!--User options-->
+                        <x-dropdown.menu.option>
+
+                            <x-slot name="header">
+                                <span class="text-current text-sm hidden sm:block">
+                                    {{ Auth::user()->getFullName() }}
+                                </span>
+                                <x-user-avatar src="{{ Auth::user()->image->getUrl() }}" />
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown.menu.link :href="route('profile')">
+                                    {{ __('Profile') }}
+                                </x-dropdown.menu.link>
+                                <form method="POST" action="{{ route('logout') }}" x-ref="logout">
+                                    @csrf
+                                    <x-dropdown.menu.link @click="$refs.logout.submit()">
+                                        {{ __('Log out') }}
+                                    </x-dropdown.menu.link>
+                                </form>
+                            </x-slot>
+
+                        </x-dropdown.menu.option>
+                    </div>
+                </header>
+
+                <!-- Page Content -->
+                <main class="overflow-x-hidden overflow-y-auto px-6 py-8">
+                    <!-- Session Status -->
+                    <x-session-status class="mb-4 text-center" :status="session('status')" />
+
+                    @yield('content')
+
+                </main>
+            </div>
         </div>
-    </form>
-</div>
+    </div>
+</body>
 
-
-
+</html>
 
 
