@@ -41,38 +41,63 @@
 
                 <!--Sidebar options-->
                 <nav class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-                    <x-dropdown.simple.option class="w-full">
+
+
+                    @can('manage-directors')
+                    <x-dropdown.simple.option class="w-full" :isActive="request()->routeIs('director.*')">
                         <x-slot name="header">
                             <x-icons.director />
                             <span>{{ __('Director') }}</span>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown.simple.link>{{ __('List directors') }}</x-dropdown.simple.link>
-                            <x-dropdown.simple.link>{{ __('Create a new director') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('director.index')">
+                                {{ __('List directors') }}
+                            </x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('director.create')">
+                                {{ __('Create a new director') }}
+                            </x-dropdown.simple.link>
                         </x-slot>
                     </x-dropdown.simple.option>
+                    @endcan
 
-                    <x-dropdown.simple.option class="w-full">
+
+                    @can('manage-guards')
+                    <x-dropdown.simple.option class="w-full" :isActive="request()->routeIs('guard.*')">
                         <x-slot name="header">
                             <x-icons.guard />
                             <span>{{ __('Guards') }}</span>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown.simple.link>{{ __('List guards') }}</x-dropdown.simple.link>
-                            <x-dropdown.simple.link>{{ __('Create a new guard') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('guard.index')">
+                                {{ __('List guards') }}
+                            </x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('guard.create')">
+                                {{ __('Create a new guard') }}
+                            </x-dropdown.simple.link>
                         </x-slot>
                     </x-dropdown.simple.option>
+                    @endcan
 
-                    <x-dropdown.simple.option title="Hello world" class="w-full">
+
+                    @can('manage-prisoners')
+                    <x-dropdown.simple.option title="Hello world" class="w-full" :isActive="request()->routeIs('prisoner.*')">
                         <x-slot name="header">
                             <x-icons.prisoner />
                             <span>{{ __('Prisoners') }}</span>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown.simple.link>{{ __('List prisoner') }}</x-dropdown.simple.link>
-                            <x-dropdown.simple.link>{{ __('Create a new prisoner') }}</x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('prisoner.index')">
+                                {{ __('List prisoner') }}
+                            </x-dropdown.simple.link>
+                            <x-dropdown.simple.link :href="route('prisoner.create')">
+                                {{ __('Create a new prisoner') }}
+                            </x-dropdown.simple.link>
                         </x-slot>
                     </x-dropdown.simple.option>
+                    @endcan
+
+
+
                 </nav>
             </div>
 
