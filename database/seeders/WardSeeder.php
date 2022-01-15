@@ -16,7 +16,7 @@ class WardSeeder extends Seeder
         Ward::factory()->count(20)->create();
 
 
-        
+
         $users_guards = User::where('role_id', 3)->get();
         // dd($users_guards);
         // dd(count($users_guards));
