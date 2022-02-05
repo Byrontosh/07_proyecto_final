@@ -30,12 +30,12 @@ class LoginRequest extends FormRequest
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
-
         $email_exist = Auth::attempt(['email' => $this->input('login_field'), 'password' => $this->input('password')], $this->boolean('remember'));
 
         $username_exist = Auth::attempt(['username' => $this->input('login_field'), 'password' => $this->input('password')], $this->boolean('remember'));
 
-        if (!$email_exist || !$username_exist)
+
+        if (!$email_exist && !$username_exist)
         {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
@@ -87,6 +88,7 @@ class WardController extends Controller
 
     public function destroy(Ward $ward)
     {
+
         $state = $ward->state;
         $message = $state ? 'inactivated' : 'activated';
 

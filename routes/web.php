@@ -9,6 +9,7 @@ use App\Http\Controllers\PrisonerJailController;
 use App\Http\Controllers\Profile\PasswordController;
 use App\Http\Controllers\Profile\ProfileAvatarController;
 use App\Http\Controllers\Profile\ProfileInformationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\WardController;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +90,14 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::get('/assignment/guards-to-wards', [GuardWardController::class,'index'])->name('assignment.guards-wards.index');
     Route::put('/assignment/guards-to-wards/{user}', [GuardWardController::class,'update'])->name('assignment.guards-wards.update');
 
+
+    Route::get('/reports', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/reports/create', [ReportController::class, 'create'])->name('report.create');
+    Route::post('/reports/create', [ReportController::class, 'store'])->name('report.store');
+    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('report.show');
+    Route::get('/reports/update/{report}', [ReportController::class, 'edit'])->name('report.edit');
+    Route::put('/reports/update/{report}', [ReportController::class, 'update'])->name('report.update');
+    Route::get('/reports/destroy/{report}', [ReportController::class, 'destroy'])->name('report.destroy');
 
 
 

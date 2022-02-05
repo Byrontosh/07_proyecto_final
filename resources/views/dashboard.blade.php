@@ -149,7 +149,25 @@
                         </x-dropdown.simple.option>
                    @endcan
 
-                   
+                   @can('viewAny', App\Models\Report::class)
+                   <x-dropdown.simple.option class="w-full" :isActive="request()->routeIs('report.*')">
+                       <x-slot name="header">
+                           <x-icons.report/>
+                           <span>{{__("Reports")}}</span>
+                       </x-slot>
+                       <x-slot name="content">
+                           <x-dropdown.simple.link :href="route('report.index')">
+                               {{ __('List reports') }}
+                           </x-dropdown.simple.link>
+                           <x-dropdown.simple.link :href="route('report.create')">
+                               {{ __('Create a new report') }}
+                           </x-dropdown.simple.link>
+                       </x-slot>
+                   </x-dropdown.simple.option>
+               @endcan
+
+
+
                 </nav>
             </div>
 
