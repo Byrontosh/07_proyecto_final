@@ -1,0 +1,44 @@
+<h3>Add new ward</h3>
+<div class="card-container d-grid gap-2 border m-3 p-3" >
+
+<form [formGroup]="myFormWard" (ngSubmit)="addWardComponent()">
+
+  <div class="form-group mb-2">
+    <input type="text" hidden="true" class="form-control" id="formGroupExampleInput" placeholder="Id" formControlName="idF">
+  </div>
+
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Name" formControlName="nameF">
+  </div>
+
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Location" formControlName="locationF">
+  </div>
+
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Description" formControlName="descriptionF">
+  </div>
+
+  <div class="d-grid gap-2 col-6 mx-auto">
+    <button class="btn btn-dark" type="submit">{{textBtn}}</button>
+  </div>
+
+</form>
+
+</div>
+
+<h2>List of wards</h2>
+
+<div class="card-container" *ngFor="let w of wards ; let i = index">
+
+  <div class="d-grid gap-2 border m-3 p-3">
+    <span>N°: {{i+1}}</span>
+    <span>Name: {{w.name}}</span>
+    <span>Location: {{w.location}}</span>
+    <span>Description: {{w.description}}</span>
+    <button type="button" class="btn btn-outline-danger" (click)="deleteWard(w.id)">Delete</button>
+
+    <button type="button" class="btn btn-outline-info" (click)="updateWardComponent(w.id)">Update</button>
+  </div>
+
+</div>
